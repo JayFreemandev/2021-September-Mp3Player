@@ -33,8 +33,11 @@
 
 <p align="justify"> 
   Service: Web audio streaming<br/>
+  
   Purpose: No more YouTube and focus on my work<br/>
+  
   <a href="https://exultant-hub-53c.notion.site/46f6dbd8fda74ee78393175573cd1022"> Notion tech blog<br/><a/>
+    
   Reference: <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788965402602"> book </a>
 </p>
 
@@ -50,11 +53,6 @@ WATING :
 
 - Spring Boot 5.x
 - Java 1.8
-
-![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
-
-<!-- PROJECT FILES DESCRIPTION -->
-<h2 id="buildwith"> :floppy_disk: Main functions</h2>
 
 <ul>
   Upload
@@ -76,13 +74,13 @@ WATING :
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <!-- DEMO -->
-<h2 id="main"> :cloud: Admin</h2>
+<h2 id="main"> :cloud: Main</h2>
 
 ![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-<h2 id="upload"> :cloud: Reply</h2>
+<h2 id="upload"> :cloud: Upload</h2>
 
 ![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
 
