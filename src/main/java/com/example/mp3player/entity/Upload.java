@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Builder
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "nickname")
 @Getter
 @NoArgsConstructor
 @Entity
@@ -24,6 +24,6 @@ public class Upload extends Base {
 
     private String originalFileName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member nickname;
 }
