@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+</head>
+
+
+<body>
+<div class="textline">
+</div>
+<div class="text" style="height: 646px; overflow: scroll">
+    <div class="table">
+        <tr class="head-title table-dark">
+            <th scope="col" style="width: 60px">ID<i id="order-icon" class="fas fa-arrow-up" style="margin-left: 5px; color: dimgray;"></i></th>
+            <th scope="col" >제목</th>
+            <th scope="col" style="width: 20%" class="text-center">퍼가기</th>
+        </tr>
+        <tr class="item" th:if="${false}" id="table-info-tbody">
+            <td scope="col">1.</td>
+            <td>프리스타일</td>
+            <td>Y</td>
+        </tr>
+    </div>
+</div>
+
+<div id="play-window" class="card mb-1">
+    <div class="card-body">
+        <p class="card-title" id="play-title">미디플레이어를 <span class="text-info"><strong>[홈 화면]</strong></span>에 등록해 사용해보세요.</p>
+
+            <p>제목</p>
+
+            <p>가수</p>
+
+            <p>장르</p>
+
+            <p>발매일</p>
+
+            <p>좋아요</p>
+
+            <p>댓글</p>
+    </div>
+</div>
+
+<button type="button" class="upload"><img src="/js/app/img/upload.jpg" onclick="location.href='/midi/upload'">
+</button>
+
+<div class="play-btn-panel">
+    <audio id="audio-player" controls preload="auto"></audio>
+</div>
+<br/>
+<!--<a href="http://scriptgenerator.net/really-simple-embed-audio-player-script/" title="Generate here your HTML5 audio player" style="text-align: right;display: block">HTML5 Audio Player</a><!-->
+
+<button type="button" class="login"><img src="/js/app/img/login.JPG" onclick='alert("안녕하세요")'>
+</button>
+
+
+<div class="man">
+    <img src="/js/app/img/redman.gif">
+</div>
+<div class="close_friend">
+    <img src="/js/app/img/close_friend.gif">
+</div>
+<div class="cat">
+    <img src="/js/app/img/cat.gif">
+</div>
+
+</body>
+<script src="/js/main.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/js/app/midi.js"> </script>
+<script>
+    midi.playerInit()
+</script>
+</html>
