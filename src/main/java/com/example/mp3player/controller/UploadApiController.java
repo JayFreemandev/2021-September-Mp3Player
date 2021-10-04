@@ -3,12 +3,10 @@ package com.example.mp3player.controller;
 import com.example.mp3player.service.UploadService;
 import com.example.mp3player.service.dto.UploadRequestDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.filechooser.FileSystemView;
@@ -22,20 +20,9 @@ public class UploadApiController {
     private final UploadService uploadService;
     private final String DEFAULT_URI = "/api/v1/midi";
 
-    @GetMapping("/midi")
-    public String midiHome() {
-        return "midi/midi-main";
-    }
-
-    @GetMapping("/midi/upload")
-    public ModelAndView upload(ModelAndView modelAndView) {
-        modelAndView.setViewName("midi/upload");
-        return modelAndView;
-    }
-
     @PostMapping(DEFAULT_URI)
     public Map<String, Object> uploadMultipleMidi(@RequestParam("files") List<MultipartFile> files,
-                                                  @RequestParam("singer") List<String> singer,
+                                                  @RequestParam("categories") List<String> categories,
                                                   @RequestParam("titles") List<String> titles,
                                                   HttpServletRequest request) throws Exception {
 
@@ -84,10 +71,11 @@ public class UploadApiController {
             // 변환 성공시 데이터베이스에 정보 입력
             if(mp3Path!=null) {
                 Long id = uploadService.save(UploadRequestDTO.builder()
-                        .genre(singer.get(i))
+                        .genre(categories.get(i))
                         .customTitle(titles.get(i))
                         .originalMp3Path("/mp3/" + uuid + ".mp3")
                         .originalFileName(originalName)
+                        //일단 유저는 빼놨음
                         .build());
                 Map<String, String> urlPair = new HashMap<>();
                 urlPair.put("originalName", originalName);
