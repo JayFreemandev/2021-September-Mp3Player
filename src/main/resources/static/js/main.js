@@ -10,7 +10,3 @@ mouseWheel.addEventListener('wheel', function (e) {
     e.preventDefault();
 });
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    new GreenAudioPlayer('.example');
-});
