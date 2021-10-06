@@ -32,19 +32,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label class="col-form-label" for="field-custom-category">카테고리 변경</label>
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="text" class="form-control" placeholder="카테고리를 입력하세요." id="field-custom-category">
-                    </div>
-                    <div class="input-group-append">
-                        <button class="input-group-text" id="btn-change-category">변경</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="form-group">
         <button class="btn btn-secondary" id="btn-reset">초기화</button>
@@ -56,9 +43,10 @@
     <table class="table table-hover" id="table-info">
         <thead>
         <tr>
-            <th scope="col">파일명</th>
-            <th scope="col">카테고리</th>
-            <th scope="col">사용자 설정 제목</th>
+            <th scope="col" style="width:20%">파일명</th>
+            <th scope="col" style="width:20%">가수</th>
+            <th scope="col" style="width:25%">제목</th>
+            <th scope="col" style="width:8%">장르</th>
             <th scope="col">크기</th>
         </tr>
         </thead>
@@ -66,10 +54,13 @@
         <tr id="info-tr-proto">
             <th scope="row" class="file-name">Default</th>
             <td class="category">
-                <input type="text" placeholder="카테고리를 입력하세요." class="form-control form-control-sm">
+                <input type="text" placeholder="가수를 입력하세요." class="form-control form-control-sm">
             </td>
             <td class="custom-title">
                 <input type="text" placeholder="제목을 입력하세요." class="form-control form-control-sm">
+            </td>
+            <td class="genre">
+                <input type="text" placeholder="장르" class="form-control form-control-sm">
             </td>
             <td class="file-size">Column content</td>
         </tr>
@@ -88,7 +79,7 @@
                     <p class="upload-result">성공/실패</p>
                     <p>성공: <span class="success-count">0</span></p>
                     <p>실패: <span class="failed-count">0</span></p>
-                    <p><a th:href="@{/midi/list}">미디파일 목록 가기</a></p>
+                    <p><a th:href="@{/}">미디파일 목록 가기</a></p>
                 </div>
                 <div class="modal-footer">
                     <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
@@ -120,9 +111,10 @@
             if (file.type != null) {
                 const clone = $("#info-tr-proto").clone()
                 clone.find(".file-name").text(file.name)
-                clone.find(".category input").val("무명-")
+                clone.find(".category input").val("")
                 const fileNameWithoutExt = file.name.substring(0, file.name.lastIndexOf("."))
                 clone.find(".custom-title input").val(fileNameWithoutExt)
+                clone.find(".genre input").val("")
                 clone.find(".file-size").text(Math.ceil(file.size / 1000) + " KB")
                 clone.show()
                 clone.attr("id", "")
@@ -132,25 +124,25 @@
             }
         })
     })
-    $("#btn-change-category").on("click", e => {
-        const catStr = $("#field-custom-category").val()
-        tbody.find(".category input").val(catStr !== "" ? catStr+"-" : "무명-")
-    })
+
     $("#btn-upload").on("click", e => {
         const files = $("#field-file").get(0).files
         if(files.length == 0) {
             alert("업로드할 파일을 선택하세요.")
             return false
         }
-        const categories = $("#table-info-tbody tr:not(#info-tr-proto) .category input").map((i, el) => $(el).val())
+
+        const singer = $("#table-info-tbody tr:not(#info-tr-proto) .category input").map((i, el) => $(el).val())
         const titles = $("#table-info-tbody tr:not(#info-tr-proto) .custom-title input").map((i, el) => $(el).val())
-        console.log(categories, titles)
+        const genre = $("#table-info-tbody tr:not(#info-tr-proto) .genre input").map((i, el) => $(el).val())
         const formData = new FormData()
         Array.from(files).forEach((file, i) => {
             formData.append("files", file)
-            formData.append("categories", categories[i])
+            formData.append("singer", singer[i])
             formData.append("titles", titles[i])
+            formData.append("genre", genre[i])
         })
+
         const entries = formData.entries()
         $("#btn-upload .spinner").show()
         $("#btn-upload .message").text("작업을 처리하고 있습니다.....")
@@ -173,6 +165,7 @@
 
                 resetAll()
             })
+
             .catch(err => {
                 console.error(err)
 
@@ -181,16 +174,17 @@
 
                 resetAll()
             })
+
             .finally(() => {
                 $("#btn-upload .spinner").hide()
                 $("#btn-upload .message").text("모든 파일 업로드")
-
             })
     })
 
     $("#btn-reset").on("click", e => {
         resetAll()
     })
+
 </script>
 </body>
 </html>
