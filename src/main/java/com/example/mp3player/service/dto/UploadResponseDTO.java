@@ -16,9 +16,14 @@ public class UploadResponseDTO {
 
     private Long userId;    // 업로드한 사람
 
+    private String singer;
+
     private String genre;
 
+   // private String release;
+
     private String customTitle;
+
 
     private String originalMp3Path;
 
@@ -31,7 +36,9 @@ public class UploadResponseDTO {
     public UploadResponseDTO(Upload entity) {
         this.id = entity.getId();
         this.userId = entity.getUserId();
+        this.singer = entity.getSinger();
         this.genre = entity.getGenre();
+     //   this.release = entity.getRelease();
         this.customTitle = entity.getCustomTitle();
         this.originalMp3Path = entity.getOriginalMp3Path();
         this.originalFileName = entity.getOriginalFileName();

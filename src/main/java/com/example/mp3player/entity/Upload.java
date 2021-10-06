@@ -1,24 +1,32 @@
 package com.example.mp3player.entity;
 
+
 import com.example.mp3player.service.dto.UploadRequestDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Builder
-@AllArgsConstructor
-@ToString(exclude = "nickname")
 @Getter
 @NoArgsConstructor
 @Entity
-public class Upload extends Base {
+public class Upload extends Base{
 
     @Id // PK 필드
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 생성규칙
     private Long id;
 
+    private Long userId;    // 업로드한 사람
+
+    private String singer;
+
     private String genre;
+
+   // private String release;
 
     private String customTitle;
 
@@ -26,20 +34,13 @@ public class Upload extends Base {
 
     private String originalFileName;
 
-    private Long userId;
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    private Member nickname;*/
-    private LocalDateTime createdDate;
-
-    private LocalDateTime modifiedDate;
-
-
     @Builder
-    public Upload(Long userId, String genre, String customTitle,
-                String hash, String originalMidiPath, String originalMp3Path,
-                String originalFileName) {
+    public Upload(Long id, Long userId, String singer, String genre, String release,  String customTitle, String originalMp3Path, String originalFileName) {
+        this.id = id;
         this.userId = userId;
+        this.singer = singer;
         this.genre = genre;
+     //   this.release = release;
         this.customTitle = customTitle;
         this.originalMp3Path = originalMp3Path;
         this.originalFileName = originalFileName;
@@ -48,6 +49,7 @@ public class Upload extends Base {
     public void update(UploadRequestDTO dto) {
         // userid는 변경될 수 없음
         this.genre = dto.getGenre() != null ? dto.getGenre() : this.genre;
+        this.singer = dto.getSinger() != null ? dto.getSinger() : this.singer;
         this.customTitle = dto.getCustomTitle() != null ? dto.getCustomTitle() : this.customTitle;
         this.originalMp3Path = dto.getOriginalMp3Path() != null ? dto.getOriginalMp3Path() : this.originalMp3Path;
     }
