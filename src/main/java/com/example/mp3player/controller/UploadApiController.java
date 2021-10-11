@@ -1,100 +1,75 @@
 package com.example.mp3player.controller;
 
-import com.example.mp3player.service.UploadService;
-import com.example.mp3player.service.dto.UploadRequestDTO;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.filechooser.FileSystemView;
-import java.io.File;
-import java.util.*;
+import com.example.mp3player.service.UploadService;
+import com.example.mp3player.service.dto.PublicResponseDTO;
+import com.example.mp3player.service.dto.UploadRequestDTO;
+import com.example.mp3player.service.dto.UploadResponseDTO;
+import com.example.mp3player.utill.DeleteUtill;
+import com.example.mp3player.utill.PlayUtill;
+import com.example.mp3player.utill.UploadUtill;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RequiredArgsConstructor
 @RestController
+@Log4j2
 public class UploadApiController {
 
-    private final UploadService uploadService;
-    private final String DEFAULT_URI = "/api/v1/midi";
+	private final UploadService uploadService;
+	private final String DEFAULT_URI = "/api/v1/midi";
 
-    @PostMapping(DEFAULT_URI)
-    public Map<String, Object> uploadMultipleMidi(@RequestParam("files") List<MultipartFile> files,
-                                                  @RequestParam("categories") List<String> categories,
-                                                  @RequestParam("titles") List<String> titles,
-                                                  HttpServletRequest request) throws Exception {
+	@PostMapping(DEFAULT_URI)
+	public UploadUtill uploadMultipleMidi(@RequestParam List<MultipartFile> files,
+		@RequestParam List<String> singer,
+		@RequestParam List<String> titles,
+		@RequestParam List<String> genre,
+		HttpServletRequest request) throws Exception {
 
-        String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-        String basePath = rootPath + "/" + "app/midi";
-        String ourUrl = request.getRequestURL().toString().replace(request.getRequestURI(),"");
+		return new UploadUtill().result(files, singer, titles, genre, request, uploadService);
+	}
 
-        Map<String, Object> result = new HashMap<>();
+	@GetMapping(DEFAULT_URI + "/mp3/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public void mp3Play(@PathVariable Long id,
+		HttpServletRequest request,
+		HttpServletResponse response) throws IOException {
+		PlayUtill play = new PlayUtill().play(id, request, response, uploadService);
+	}
 
-        if(files.size() == 0) {
-            result.put("status", "NoFile");
-            result.put("successList", null);
-            result.put("failedList", null);
+	@GetMapping(DEFAULT_URI)
+	public List<PublicResponseDTO> findAll() {
+		return uploadService.findAll();
+	}
 
-            return result;
-        }
+	@PutMapping(DEFAULT_URI + "/{id}")
+	public Long updateMidiInfo(@RequestBody UploadRequestDTO RequestDTO,
+		@PathVariable Long id) {
+		UploadResponseDTO midi = uploadService.findById(id);
+		return uploadService.update(id, RequestDTO);
+	}
 
-        System.out.println(">>> " + rootPath);
-        System.out.println(">>> " + basePath);
+	@DeleteMapping(DEFAULT_URI + "/{id}")
+	public Long deleteMidi(@PathVariable Long id) {
+		return new DeleteUtill().delete(id, uploadService);
+	}
 
-        File mp3Dir = new File(basePath + "/mp3");
-
-        // 디렉토리 생성
-        if(!mp3Dir.exists()) {
-            mp3Dir.mkdirs();
-            System.out.println("mkdirs: mp3");
-        }
-
-        List<Map<String, String>> successList = new ArrayList<>();
-        List<String> urlList = new ArrayList<>();
-        List<String> failedList = new ArrayList<>();
-        MultipartFile file = null;
-
-        for(int i = 0; i < files.size(); i++) {
-
-            file = files.get(i);
-
-            String originalName = file.getOriginalFilename();
-            String originalExt = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();
-            String uuid = UUID.randomUUID().toString();
-            String mp3Path = basePath + "/mp3/" + uuid + ".mp3";
-
-            File dest = new File(mp3Path);
-            file.transferTo(dest);
-
-            // 변환 성공시 데이터베이스에 정보 입력
-            if(mp3Path!=null) {
-                Long id = uploadService.save(UploadRequestDTO.builder()
-                        .genre(categories.get(i))
-                        .customTitle(titles.get(i))
-                        .originalMp3Path("/mp3/" + uuid + ".mp3")
-                        .originalFileName(originalName)
-                        //일단 유저는 빼놨음
-                        .build());
-                Map<String, String> urlPair = new HashMap<>();
-                urlPair.put("originalName", originalName);
-                urlPair.put("url", ourUrl + "/api/v1/midi/mp3/" + id);
-                successList.add(urlPair);
-            } else {
-                failedList.add(originalName);
-            }
-        }
-
-        if(successList.size() > 0 && failedList.size() == 0) {
-            result.put("status", "AllFileSuccess");
-        } else if(successList.size() > 0 && failedList.size() > 0) {
-            result.put("status", "SomeFileSuccess");
-        } else if (successList.size() > 0){
-            result.put("status", "AllFileFailed");
-        }
-        result.put("successList", successList);
-        result.put("failedList", failedList);
-        return result;
-    }
 }
