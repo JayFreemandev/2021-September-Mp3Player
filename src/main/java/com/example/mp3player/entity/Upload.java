@@ -1,15 +1,17 @@
 package com.example.mp3player.entity;
 
-
-import com.example.mp3player.service.dto.UploadRequestDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.example.mp3player.service.dto.UploadRequestDTO;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
@@ -48,9 +50,9 @@ public class Upload extends Base{
 
     public void update(UploadRequestDTO dto) {
         // userid는 변경될 수 없음
-        this.genre = dto.getGenre() != null ? dto.getGenre() : this.genre;
-        this.singer = dto.getSinger() != null ? dto.getSinger() : this.singer;
-        this.customTitle = dto.getCustomTitle() != null ? dto.getCustomTitle() : this.customTitle;
-        this.originalMp3Path = dto.getOriginalMp3Path() != null ? dto.getOriginalMp3Path() : this.originalMp3Path;
+        this.genre = Objects.nonNull(dto.getGenre()) ? dto.getGenre() : this.genre;
+        this.singer = Objects.nonNull(dto.getSinger())  ? dto.getSinger() : this.singer;
+        this.customTitle = Objects.nonNull(dto.getCustomTitle()) ? dto.getCustomTitle() : this.customTitle;
+        this.originalMp3Path = Objects.nonNull(dto.getOriginalMp3Path()) ? dto.getOriginalMp3Path() : this.originalMp3Path;
     }
 }
