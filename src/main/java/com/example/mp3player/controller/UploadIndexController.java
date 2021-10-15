@@ -1,24 +1,40 @@
 package com.example.mp3player.controller;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.example.mp3player.service.UploadService;
+import com.example.mp3player.service.dto.PublicResponseDTO;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RequiredArgsConstructor
 @Controller
+@Log4j2
 public class UploadIndexController {
 
-    @GetMapping("/")
-    public String midiHome() {
-        return "midi/midi-main";
-    }
+	private final UploadService uploadService;
 
-    @GetMapping("/midi/upload")
-    public ModelAndView upload(ModelAndView modelAndView) {
-        modelAndView.setViewName("midi/upload");
-        return modelAndView;
-    }
+	@GetMapping("/")
+	public String midiHome() {
+		return "midi/midi-main";
+	}
 
+	@GetMapping("/midi/upload")
+	public String upload() {
+		return "midi/upload";
+	}
 
+	@GetMapping("/midi/update")
+	public String updateInfoPage(Model model) {
+		List<PublicResponseDTO> list = null;
+		list = uploadService.findAll();
+		log.info(">>>> " + list);
+		model.addAttribute("list", list);
+		return "midi/midi-edit";
+	}
 }

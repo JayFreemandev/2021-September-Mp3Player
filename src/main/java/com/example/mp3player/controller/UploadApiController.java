@@ -13,63 +13,68 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.mp3player.service.S3Service;
 import com.example.mp3player.service.UploadService;
 import com.example.mp3player.service.dto.PublicResponseDTO;
 import com.example.mp3player.service.dto.UploadRequestDTO;
 import com.example.mp3player.service.dto.UploadResponseDTO;
 import com.example.mp3player.utill.DeleteUtill;
-import com.example.mp3player.utill.PlayUtill;
 import com.example.mp3player.utill.UploadUtill;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@RequiredArgsConstructor
 @RestController
-@Log4j2
+@AllArgsConstructor
+@RequestMapping("/api/v1/midi")
 public class UploadApiController {
+	private UploadService uploadService;
+	private UploadUtill uploadUtill;
 
-	private final UploadService uploadService;
-	private final String DEFAULT_URI = "/api/v1/midi";
-
-	@PostMapping(DEFAULT_URI)
+	@PostMapping()
 	public UploadUtill uploadMultipleMidi(@RequestParam List<MultipartFile> files,
 		@RequestParam List<String> singer,
 		@RequestParam List<String> titles,
 		@RequestParam List<String> genre,
 		HttpServletRequest request) throws Exception {
 
-		return new UploadUtill().result(files, singer, titles, genre, request, uploadService);
+		return uploadUtill.result(files, singer, titles, genre, request);
 	}
 
-	@GetMapping(DEFAULT_URI + "/mp3/{id}")
+	@GetMapping("/mp3/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void mp3Play(@PathVariable Long id,
+	public String mp3Play(@PathVariable Long id,
 		HttpServletRequest request,
-		HttpServletResponse response) throws IOException {
-		PlayUtill play = new PlayUtill().play(id, request, response, uploadService);
+		HttpServletResponse response, Object play) throws IOException {
+		UploadResponseDTO midi = uploadService.findById(id);
+		return midi.getOriginalMp3Path();
 	}
 
-	@GetMapping(DEFAULT_URI)
+	@GetMapping()
 	public List<PublicResponseDTO> findAll() {
 		return uploadService.findAll();
 	}
 
-	@PutMapping(DEFAULT_URI + "/{id}")
+	@PutMapping("/{id}")
 	public Long updateMidiInfo(@RequestBody UploadRequestDTO RequestDTO,
 		@PathVariable Long id) {
 		UploadResponseDTO midi = uploadService.findById(id);
 		return uploadService.update(id, RequestDTO);
 	}
 
-	@DeleteMapping(DEFAULT_URI + "/{id}")
+	@DeleteMapping("/{id}")
 	public Long deleteMidi(@PathVariable Long id) {
-		return new DeleteUtill().delete(id, uploadService);
+		UploadResponseDTO midi = uploadService.findById(id);
+		uploadService.delete(id);
+		//파일 delete folder로 이동
+		new DeleteUtill().delete(midi);
+		return id;
 	}
 
 }
