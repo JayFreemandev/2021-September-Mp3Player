@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>업로드</title>
+    <div th:replace="/fragments/header.html :: fragment-header"></div>
+    <link rel="stylesheet" type="text/css" href="/css/upload.css"/>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-2">파일 업로드</h2>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="col-form-label" for="field-file">업로드할 파일 선택</label>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="field-file" multiple>
+                        <label class="custom-file-label" for="field-file">파일을 선택하세요.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-secondary" id="btn-reset">초기화</button>
+        <button class="btn btn-primary" id="btn-upload">
+            <span class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="message">모든 파일 업로드</span>
+        </button>
+    </div>
+    <table class="table table-hover" id="table-info">
+        <thead>
+        <tr>
+            <th scope="col" style="width:20%">파일명</th>
+            <th scope="col" style="width:20%">가수</th>
+            <th scope="col" style="width:25%">제목</th>
+            <th scope="col" style="width:8%">장르</th>
+            <th scope="col">크기</th>
+        </tr>
+        </thead>
+        <tbody id="table-info-tbody">
+        <tr id="info-tr-proto">
+            <th scope="row" class="file-name">Default</th>
+            <td class="category">
+                <input type="text" placeholder="가수를 입력하세요." class="form-control form-control-sm">
+            </td>
+            <td class="custom-title">
+                <input type="text" placeholder="제목을 입력하세요." class="form-control form-control-sm">
+            </td>
+            <td class="genre">
+                <input type="text" placeholder="장르" class="form-control form-control-sm">
+            </td>
+            <td class="file-size">Column content</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">업로드 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="upload-result">성공/실패</p>
+                    <p>성공: <span class="success-count">0</span></p>
+                    <p>실패: <span class="failed-count">0</span></p>
+                    <p><a th:href="@{/}">미디파일 목록 가기</a></p>
+                </div>
+                <div class="modal-footer">
+                    <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/app/upload.js"></script>
+</body>
+</html>
