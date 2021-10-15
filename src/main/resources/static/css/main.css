@@ -72,14 +72,6 @@ body {
 
 }
 
-.audioPlayer {
-    height: 50px;
-    position: absolute;
-    width: 295px;
-    left: 1570px;
-    top: 143px;
-}
-
 .login {
     height: 106px;
     position: absolute;
@@ -117,13 +109,13 @@ body {
 }
 
 #play-window {
-    position: fixed;
+    position: absolute;
     z-index: 50;
-    bottom: 551px;
+    bottom: 189px;
     right: 514px;
     width: 456px;
-    height: 243px;
-    background: rgba( 111, 66, 193, 0.25 );
+    height: 616px;
+    background: rgb(209 206 214 / 25%);
     backdrop-filter: blur( 20px );
     -webkit-backdrop-filter: blur( 20px );
     border-top: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -138,8 +130,11 @@ body {
     top: 143px;
 }
 
-#play-title {
+#play-info{
     text-align: center;
+}
+
+#play-title, #play-genre, #play-singer, #play-relieseDate {
     overflow: hidden;
     line-height: 2.1;
     animation: scroll 10s linear infinite;

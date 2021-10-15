@@ -1,0 +1,31 @@
+.bg-img {
+    background: url('/image/btn_sprites_1.png') no-repeat 0 top;
+    display: inline-block;
+    width: 420px;
+    height: 210px;
+    border: none;
+}
+
+.bg-img.delete {
+    width: 200px;
+    height: 200px;
+    background-position: -5px -5px;
+    zoom: 0.1;
+    margin-left: 100px;
+}
+
+.bg-img.update {
+    width: 200px;
+    height: 200px;
+    background-position: -215px -5px;
+    zoom: 0.1;
+}
+
+/* 모바일 */
+@media (min-width: 320px) and (max-width: 767px) {
+    .tbl-col-input {
+        min-width: 200px;
+    }
+
+}
+
