@@ -22,6 +22,7 @@
     <li><a href="#db"> ➤ DB </a></li>
     <li><a href="#main"> ➤ Main </a></li>
     <li><a href="#upload"> ➤ Upload </a></li>
+    <li><a href="#update"> ➤ Update </a></li>
     <li><a href="#Wishlist"> ➤ Wish list </a></li>
   </ol>
 </details>
@@ -76,15 +77,22 @@ WATING :
 <!-- DEMO -->
 <h2 id="main"> :cloud: Main</h2>
 
-![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
+![](https://user-images.githubusercontent.com/72185011/137588444-12e4dadf-ef73-4713-88b8-d44b714d57ba.gif)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2 id="upload"> :cloud: Upload</h2>
 
-![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
+![](https://user-images.githubusercontent.com/72185011/137588488-f8777669-151e-402a-b34d-8079b47c776a.gif)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<h2 id="update"> :cloud: Upload</h2>
+
+![](https://user-images.githubusercontent.com/72185011/137588455-ee34723a-cbc2-4375-9cc1-5d8677dffc14.gif)
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
 
 <h2 id="Wishlist"> :cloud: Wish list(ToDo)</h2>
 <ul>
