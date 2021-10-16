@@ -22,7 +22,6 @@
     <li><a href="#db"> ➤ DB </a></li>
     <li><a href="#main"> ➤ Main </a></li>
     <li><a href="#upload"> ➤ Upload </a></li>
-    <li><a href="#login"> ➤ Login </a></li>
     <li><a href="#Wishlist"> ➤ Wish list </a></li>
   </ol>
 </details>
@@ -82,13 +81,6 @@ WATING :
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2 id="upload"> :cloud: Upload</h2>
-
-![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
-
-![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
-
-<!-- DEMO -->
-<h2 id="login"> :cloud: Login</h2>
 
 ![](https://user-images.githubusercontent.com/72185011/133433765-c4fb94f6-1e73-4420-8c91-931697d65c50.jpg)
 
