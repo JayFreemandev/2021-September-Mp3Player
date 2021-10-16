@@ -52,17 +52,12 @@ WATING :
 <!-- PROJECT FILES DESCRIPTION -->
 <h2 id="buildwith"> :floppy_disk: Project Files Description</h2>
 
-- Spring Boot 5.x
+- Spring Boot
 - Java 1.8
-
-<ul>
-  Upload
-  <li></li>
-</ul>
-  
-<ul>  
-  Login
-  <li></li>
+- JPA
+- Tymeleaf
+- Amazon S3
+- Oauth2 Google login
 
 </ul>
 
